@@ -2,7 +2,7 @@
 pragma solidity ^0.8.20;
 
 contract TokenOracle {
-  uint256 price;
+  uint256 public price;
   address owner;
 
   event RequestPrice();
