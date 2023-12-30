@@ -1,22 +1,20 @@
-import { ethers } from "hardhat";
+import { ethers, network } from "hardhat";
 
 async function main() {
-  const currentTimestampInSeconds = Math.round(Date.now() / 1000);
-  const unlockTime = currentTimestampInSeconds + 60;
+  const Collection = await ethers.getContractFactory("PhiloemCollection");
+  const collection = await Collection.deploy();
 
-  const lockedAmount = ethers.parseEther("0.001");
+  await collection.waitForDeployment();
 
-  const lock = await ethers.deployContract("Lock", [unlockTime], {
-    value: lockedAmount,
-  });
+  console.log(`collection's smart contract deployed to : ${collection.target}`);
 
-  await lock.waitForDeployment();
-
-  console.log(
-    `Lock with ${ethers.formatEther(
-      lockedAmount
-    )}ETH and unlock timestamp ${unlockTime} deployed to ${lock.target}`
-  );
+  if(network.name === 'sepolia') {
+    console.log('Verifying contract on Etherscan...');
+    const tx = collection.deploymentTransaction();
+    if (tx !== null) {
+      await tx.wait(6);
+    }
+  }
 }
 
 // We recommend this pattern to be able to use async/await everywhere
