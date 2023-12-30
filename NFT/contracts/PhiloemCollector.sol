@@ -12,7 +12,7 @@ contract PhiloemCollection is ERC721, ERC721URIStorage {
     }
 
     function _baseURI() internal pure override returns (string memory) {
-        return "ipfs://QmU4vBVqXu7DHW6fvGt74ZrS2SQ2Pr8hc9XZTabgsaW3hw";
+        return "ipfs://QmWKHwBEjroMccjqUX33ZmShoX48pzTtvmAegn12reFXj2/";
     }
 
     // The following functions are overrides required by Solidity.
